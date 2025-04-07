@@ -10,7 +10,7 @@ public class PlayerInputAction : MonoBehaviour
    public bool isRunPressed => playerInput.CharacterControls.Run.ReadValue<float>() > 0.5f;
 
    public bool isWalkPressed => walkInput.x != 0f || walkInput.y != 0f;
-
+   
    void Awake(){
     playerInput = new PlayerInput();
    }

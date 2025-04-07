@@ -12,6 +12,8 @@ public class PlayerStateMachine : StateMachine
 
     PlayerController player;
 
+
+
     void Awake(){
         _animator = GetComponent<Animator>();
         player = GetComponent<PlayerController>();
