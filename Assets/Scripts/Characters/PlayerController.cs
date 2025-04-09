@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -11,6 +9,15 @@ public class PlayerController : MonoBehaviour
     Vector3 _cameraMovement;
 
     CharacterController _characterController;
+    public ChairInteraction currentChair;
+
+    private bool isNearChair = false;
+    private bool isSitting = false;
+
+    private bool sitRequested = false;
+    public bool SitRequested{get{return sitRequested;} set{ sitRequested = value; }}
+    public bool IsSitting{ get { return isSitting; } set { isSitting = value; }}
+    public bool IsNearChair { get { return isNearChair; } set { isNearChair = value; }}
 
     public float rotationFactorPerFrame = 10.0f;
 
@@ -23,12 +30,17 @@ public class PlayerController : MonoBehaviour
         input.EnableOn();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        characterRotation();
-        _cameraMovement = ConvertToCameraSpace(_walk);
-        _characterController.Move(_cameraMovement * Time.deltaTime);
+        HandleChairInteraction();
+
+         if (!isSitting){
+            CharacterRotation();
+            _cameraMovement = ConvertToCameraSpace(_walk);
+            _characterController.Move(_cameraMovement * Time.deltaTime);
+         }
+        
     }
 
     Vector3 ConvertToCameraSpace(Vector3 vectorToRotate){
@@ -50,7 +62,7 @@ public class PlayerController : MonoBehaviour
         return finalRotation;
     }
 
-    void characterRotation(){
+    void CharacterRotation(){
         Vector3 positionLookAt;
         positionLookAt.x = _cameraMovement.x;
         positionLookAt.y = 0.0f;
@@ -68,5 +80,20 @@ public class PlayerController : MonoBehaviour
         _walk.x = input.walkInput.x * speed;
         _walk.z = input.walkInput.y * speed;
 
+    }
+
+    void HandleChairInteraction()
+    {
+        if (input.isInteractPressed)
+        {
+            if (isSitting)
+            {
+                isSitting = false;
+            }
+            else if (isNearChair)
+            {
+                sitRequested = true; 
+            }
+        }
     }
 }

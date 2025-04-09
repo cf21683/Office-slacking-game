@@ -9,11 +9,14 @@ public class PlayerState_Idle : PlayerState
     }
 
     public override void LogicUpdate(){
-    if (input.isWalkPressed)
+    if (input.isWalkPressed && input.isRunPressed)
     {
-        stateMachine.SwitchState(typeof(PlayerState_Walk));
-    }else if(input.isWalkPressed && input.isRunPressed){
         stateMachine.SwitchState(typeof(PlayerState_Run));
+    }else if(input.isWalkPressed){
+        stateMachine.SwitchState(typeof(PlayerState_Walk));
+    }else if(player.SitRequested && !player.IsSitting && player.IsNearChair){
+        player.SitRequested = false;
+        stateMachine.SwitchState(typeof(PlayerState_Sit));
     }
         
     }
