@@ -7,7 +7,7 @@ public class PlayerState_Run : PlayerState
 {
     [SerializeField] float runSpeed = 6f;
      public override void Enter(){
-        
+        player.IsIdle = false;
         animator.CrossFade("Run", 0.2f);
     }
 

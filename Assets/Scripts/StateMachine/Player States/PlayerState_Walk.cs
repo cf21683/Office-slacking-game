@@ -7,6 +7,7 @@ public class PlayerState_Walk : PlayerState
 {
     [SerializeField]float walkSpeed = 3f;
     public override void Enter(){
+        player.IsIdle = false;
         animator.CrossFade("Walk", 0.05f);
     }
 

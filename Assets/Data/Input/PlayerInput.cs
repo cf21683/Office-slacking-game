@@ -62,6 +62,24 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Work"",
+                    ""type"": ""Button"",
+                    ""id"": ""4467217f-d945-43d5-a47d-f235d515918d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slack"",
+                    ""type"": ""Button"",
+                    ""id"": ""f45bd1bf-f4a5-48ed-80bb-f8fc1f1d3450"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -152,6 +170,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Interaction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5b0f39f9-017e-4747-91c4-a17a6a53a89b"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Work"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5d74ff1f-7251-4912-9ad0-7ace0468f4fb"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -164,6 +204,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_CharacterControls_Run = m_CharacterControls.FindAction("Run", throwIfNotFound: true);
         m_CharacterControls_Look = m_CharacterControls.FindAction("Look", throwIfNotFound: true);
         m_CharacterControls_Interaction = m_CharacterControls.FindAction("Interaction", throwIfNotFound: true);
+        m_CharacterControls_Work = m_CharacterControls.FindAction("Work", throwIfNotFound: true);
+        m_CharacterControls_Slack = m_CharacterControls.FindAction("Slack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +271,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_CharacterControls_Run;
     private readonly InputAction m_CharacterControls_Look;
     private readonly InputAction m_CharacterControls_Interaction;
+    private readonly InputAction m_CharacterControls_Work;
+    private readonly InputAction m_CharacterControls_Slack;
     public struct CharacterControlsActions
     {
         private @PlayerInput m_Wrapper;
@@ -237,6 +281,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Run => m_Wrapper.m_CharacterControls_Run;
         public InputAction @Look => m_Wrapper.m_CharacterControls_Look;
         public InputAction @Interaction => m_Wrapper.m_CharacterControls_Interaction;
+        public InputAction @Work => m_Wrapper.m_CharacterControls_Work;
+        public InputAction @Slack => m_Wrapper.m_CharacterControls_Slack;
         public InputActionMap Get() { return m_Wrapper.m_CharacterControls; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -258,6 +304,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Interaction.started += instance.OnInteraction;
             @Interaction.performed += instance.OnInteraction;
             @Interaction.canceled += instance.OnInteraction;
+            @Work.started += instance.OnWork;
+            @Work.performed += instance.OnWork;
+            @Work.canceled += instance.OnWork;
+            @Slack.started += instance.OnSlack;
+            @Slack.performed += instance.OnSlack;
+            @Slack.canceled += instance.OnSlack;
         }
 
         private void UnregisterCallbacks(ICharacterControlsActions instance)
@@ -274,6 +326,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Interaction.started -= instance.OnInteraction;
             @Interaction.performed -= instance.OnInteraction;
             @Interaction.canceled -= instance.OnInteraction;
+            @Work.started -= instance.OnWork;
+            @Work.performed -= instance.OnWork;
+            @Work.canceled -= instance.OnWork;
+            @Slack.started -= instance.OnSlack;
+            @Slack.performed -= instance.OnSlack;
+            @Slack.canceled -= instance.OnSlack;
         }
 
         public void RemoveCallbacks(ICharacterControlsActions instance)
@@ -297,5 +355,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnRun(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
+        void OnWork(InputAction.CallbackContext context);
+        void OnSlack(InputAction.CallbackContext context);
     }
 }

@@ -14,6 +14,16 @@ public class PlayerController : MonoBehaviour
     private bool isNearChair = false;
     private bool isSitting = false;
 
+    public bool isWork;
+    public bool isSlack;
+    
+    public bool isIdle;
+
+    public bool IsIdle{ get { return isIdle; } set { isIdle = value; }} 
+
+    public bool IsWork{ get { return isWork; } set { isWork = value; }}
+    public bool IsSlack{ get { return isSlack; } set { isSlack = value; }}
+
     private bool sitRequested = false;
     public bool SitRequested{get{return sitRequested;} set{ sitRequested = value; }}
     public bool IsSitting{ get { return isSitting; } set { isSitting = value; }}

@@ -12,6 +12,9 @@ public class PlayerInputAction : MonoBehaviour
 
    public bool isInteractPressed => playerInput.CharacterControls.Interaction.WasPressedThisFrame();
    
+   public bool isWorkPressed => playerInput.CharacterControls.Work.WasPressedThisFrame();
+   public bool isSlackPressed => playerInput.CharacterControls.Slack.WasPressedThisFrame();
+   
    void Awake(){
     playerInput = new PlayerInput();
    }

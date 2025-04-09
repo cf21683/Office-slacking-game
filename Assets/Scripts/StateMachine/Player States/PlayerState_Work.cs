@@ -4,17 +4,23 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data/StateMachine/PlayerState/Work",fileName = "PlayerState_Work")]
 public class PlayerState_Work: PlayerState
 {
-    float speed = 0f;
     public override void Enter(){
-        animator.CrossFade("Typing", 0.05f);
+        player.IsSlack = false;
+        player.IsWork = true;
+        player.IsIdle = false;
+        animator.CrossFade("Typing", 0.7f);
     }
 
     public override void LogicUpdate(){
-        
+        if(input.isInteractPressed){
+            stateMachine.SwitchState(typeof(PlayerState_Idle));
+        }else if(input.isSlackPressed){
+            stateMachine.SwitchState(typeof(PlayerState_Slack));
+        }
     }
 
     public override void PhysicsUpdate(){
-        player.SetVelocity(speed);
+        player.SetVelocity(0f);
     }
 
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerState_Idle : PlayerState
 {
     public override void Enter(){
+        player.IsIdle = true;
         animator.CrossFade("Idle", 0.2f);
     }
 
