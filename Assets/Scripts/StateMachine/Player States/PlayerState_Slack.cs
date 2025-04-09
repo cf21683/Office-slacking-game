@@ -7,7 +7,7 @@ public class PlayerState_Slack : PlayerState
         player.IsSlack = true;
         player.IsWork = false;
         player.IsIdle = false;
-        animator.CrossFade("Gaming", 0.7f);
+        animator.Play("Gaming");
     }
 
     
