@@ -6,6 +6,8 @@ public class PlayerState_Idle : PlayerState
 {
     public override void Enter(){
         player.IsIdle = true;
+        player.IsWork = false;
+        player.IsSlack = false;
         animator.CrossFade("Idle", 0.2f);
     }
 

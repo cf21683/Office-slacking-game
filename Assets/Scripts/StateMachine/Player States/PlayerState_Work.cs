@@ -8,7 +8,7 @@ public class PlayerState_Work: PlayerState
         player.IsSlack = false;
         player.IsWork = true;
         player.IsIdle = false;
-        animator.Play("Typing");
+        animator.CrossFade("Typing",0.1f);
     }
 
     public override void LogicUpdate(){
