@@ -4,9 +4,10 @@ public class PlayerState_Sit : PlayerState
 {
     
     public override void Enter(){
+        player.computerCam.Priority = 20;
         player.IsSitting = true;
         Vector3 position = player.currentChair.sitPoint.position;
-        position.y = 0f;
+        position.y = 0.07f;
         player.transform.position = position;
 
         player.transform.rotation = Quaternion.Euler(0, -90, 0);

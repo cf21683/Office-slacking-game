@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
     Vector3 _cameraMovement;
 
     CharacterController _characterController;
+
+    public Cinemachine.CinemachineFreeLook freeLookCam;
+    public Cinemachine.CinemachineVirtualCamera computerCam;
     public ChairInteraction currentChair;
 
     private bool isNearChair = false;

@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerState_Idle : PlayerState
 {
     public override void Enter(){
+        player.computerCam.Priority = 1;
         player.IsIdle = true;
         player.IsWork = false;
         player.IsSlack = false;

@@ -7,6 +7,7 @@ public class PlayerState_Run : PlayerState
 {
     [SerializeField] float runSpeed = 6f;
      public override void Enter(){
+        player.computerCam.Priority = 1;
         player.IsIdle = true;
         player.IsWork = false;
         player.IsSlack = false;

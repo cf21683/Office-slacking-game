@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerState_Slack : PlayerState
 {
     public override void Enter(){
+        player.computerCam.Priority = 20;
         player.IsSlack = true;
         player.IsWork = false;
         player.IsIdle = false;
