@@ -7,10 +7,10 @@ public class PlayerState_Sit : PlayerState
         player.computerCam.Priority = 20;
         player.IsSitting = true;
         Vector3 position = player.currentChair.sitPoint.position;
-        position.y = 0.07f;
+        position.y = 0.192f;
         player.transform.position = position;
 
-        player.transform.rotation = Quaternion.Euler(0, -90, 0);
+        player.transform.rotation = Quaternion.Euler(0, 90, 0);
 
         
         animator.Play("Sit");
