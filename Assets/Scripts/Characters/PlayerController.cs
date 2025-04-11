@@ -55,13 +55,23 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleChairInteraction();
-
+        HandleGravity();
          if (!isSitting){
             CharacterRotation();
             _cameraMovement = ConvertToCameraSpace(_walk);
             _characterController.Move(_cameraMovement * Time.deltaTime);
          }
         
+    }
+
+    void HandleGravity(){
+        if(_characterController.isGrounded){
+            float groundGravity = -0.05f;
+            _walk.y =groundGravity;
+        }else{
+            float gravity = -9.8f;
+            _walk.y = gravity;
+        }
     }
 
     Vector3 ConvertToCameraSpace(Vector3 vectorToRotate){
