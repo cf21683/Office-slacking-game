@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class PlayerBusy : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     public PlayerController player;
     public PlayerInputAction input;
 

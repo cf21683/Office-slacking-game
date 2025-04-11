@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     public Cinemachine.CinemachineVirtualCamera computerCam;
     public ChairInteraction currentChair;
 
+    public AudioSource footstepSource;
+    public AudioClip walkClip;
+
     private bool isNearChair = false;
     private bool isSitting = false;
 
