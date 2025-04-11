@@ -9,11 +9,12 @@ public class PlayerState_Work: PlayerState
         player.IsSlack = false;
         player.IsWork = true;
         player.IsIdle = false;
+        player.UnlockCursor();
         animator.CrossFade("Typing",0.1f);
     }
 
     public override void LogicUpdate(){
-        if(input.isInteractPressed){
+        if(input.isInteractPressed && !player.IsBusy){
             stateMachine.SwitchState(typeof(PlayerState_Idle));
         }else if(input.isSlackPressed){
             stateMachine.SwitchState(typeof(PlayerState_Slack));

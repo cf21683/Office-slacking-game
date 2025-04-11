@@ -9,6 +9,7 @@ public class PlayerState_Idle : PlayerState
         player.IsIdle = true;
         player.IsWork = false;
         player.IsSlack = false;
+        player.LockCursor();
         animator.CrossFade("Idle", 0.2f);
     }
 

@@ -8,12 +8,13 @@ public class PlayerState_Slack : PlayerState
         player.IsSlack = true;
         player.IsWork = false;
         player.IsIdle = false;
+        player.UnlockCursor();
         animator.CrossFade("Gaming",0.1f);
     }
 
     
     public override void LogicUpdate(){
-        if(input.isInteractPressed){
+        if(input.isInteractPressed && !player.IsBusy){
             stateMachine.SwitchState(typeof(PlayerState_Idle));
         }else if(input.isWorkPressed){
             stateMachine.SwitchState(typeof(PlayerState_Work));

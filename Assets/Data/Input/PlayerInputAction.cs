@@ -12,8 +12,31 @@ public class PlayerInputAction : MonoBehaviour
 
    public bool isInteractPressed => playerInput.CharacterControls.Interaction.WasPressedThisFrame();
    
-   public bool isWorkPressed => playerInput.CharacterControls.Work.WasPressedThisFrame();
-   public bool isSlackPressed => playerInput.CharacterControls.Slack.WasPressedThisFrame();
+   private bool workPressedThisFrame = false;
+   private bool slackPressedThisFrame = false;
+    public bool isWorkPressed => GetAndReset(ref workPressedThisFrame);
+    public bool isSlackPressed => GetAndReset(ref slackPressedThisFrame);
+
+    private bool GetAndReset(ref bool flag)
+    {
+        if (flag)
+        {
+            flag = false;
+            return true;
+        }
+        return false;
+    }
+
+
+    public void TriggerWork()
+    {
+        workPressedThisFrame = true;
+    }
+
+    public void TriggerSlack()
+    {
+        slackPressedThisFrame = true;
+    }
    
    void Awake(){
     playerInput = new PlayerInput();

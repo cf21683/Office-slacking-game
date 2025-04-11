@@ -22,6 +22,10 @@ public class PlayerController : MonoBehaviour
     
     public bool isIdle;
 
+    private bool isBusy = false;
+
+    public bool IsBusy{get{return isBusy;} set {isBusy = value;}}
+
     public bool IsIdle{ get { return isIdle; } set { isIdle = value; }} 
 
     public bool IsWork{ get { return isWork; } set { isWork = value; }}
@@ -40,6 +44,7 @@ public class PlayerController : MonoBehaviour
     }    
     void Start()
     {   
+        LockCursor();
         input.EnableOn();
     }
 
@@ -108,5 +113,17 @@ public class PlayerController : MonoBehaviour
                 sitRequested = true; 
             }
         }
+    }
+
+    public void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
