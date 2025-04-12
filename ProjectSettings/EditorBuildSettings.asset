@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HideEnding.unity
     guid: 405ec5cb451d44555bfc8b04c690462c
+  - enabled: 1
+    path: Assets/Scenes/Lose.unity
+    guid: 32c505da40c5b49638bb214ce6310542
   m_configObjects: {}

@@ -7,9 +7,9 @@ public class BossReturnState : BaseState
     private PlayerDetector PlayerDetector;
     private Vector3 ReturnPoint;
     private AudioSource FootstepSource;
-    private AudioSource HeatBeatingSource;
+    // private AudioSource HeatBeatingSource;
     private AudioClip walkClip;
-    private AudioClip heatBeatingClip;
+    // private AudioClip heatBeatingClip;
 
     private bool SetDestinationSny;
     private bool SetSoundsSny;
@@ -23,9 +23,9 @@ public class BossReturnState : BaseState
         PlayerDetector = CurrentEnemy.PlayerDetector;
         ReturnPoint = CurrentEnemy.ReturnPointTransform.position;
         FootstepSource = CurrentEnemy.FootstepSource;
-        HeatBeatingSource = CurrentEnemy.HeatBeatingSource;
+        // HeatBeatingSource = CurrentEnemy.HeatBeatingSource;
         walkClip = CurrentEnemy.WalkClip;
-        heatBeatingClip = CurrentEnemy.HeatBeatingClip;
+        // heatBeatingClip = CurrentEnemy.HeatBeatingClip;
         
 
         Agent.speed = CurrentEnemy.CurrentSpeed;
@@ -78,8 +78,8 @@ public class BossReturnState : BaseState
         {
             FootstepSource.loop = false;
             FootstepSource.Stop();
-            HeatBeatingSource.loop = false;
-            HeatBeatingSource.Stop();
+            // HeatBeatingSource.loop = false;
+            // HeatBeatingSource.Stop();
         }
 
     }
@@ -96,8 +96,8 @@ public class BossReturnState : BaseState
         if (FootstepSource.clip != walkClip)
             FootstepSource.clip = walkClip;
         
-        if (HeatBeatingSource.clip != heatBeatingClip)
-            HeatBeatingSource.clip = heatBeatingClip;
+        // if (HeatBeatingSource.clip != heatBeatingClip)
+        //     HeatBeatingSource.clip = heatBeatingClip;
 
         if (!FootstepSource.isPlaying && SetSoundsSny)
         {

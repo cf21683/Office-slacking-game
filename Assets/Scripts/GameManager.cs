@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public int slackScore = 0;
     public bool hiddenEndingUnlocked = false;
 
+    public int needWorkScore = 300;
+
 
     private bool endingTriggered = false;
 
@@ -47,7 +49,9 @@ public class GameManager : MonoBehaviour
             Debug.Log("触发隐藏结局");
             SceneManager.LoadSceneAsync(4);
         }
-        else if (workScore > slackScore)
+        else if (needWorkScore > workScore){
+            SceneManager.LoadSceneAsync(5);
+        }else if(workScore > slackScore)
         {
             Debug.Log("触发工作结局");
             SceneManager.LoadSceneAsync(2);
