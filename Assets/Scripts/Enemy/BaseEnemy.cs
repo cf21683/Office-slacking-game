@@ -6,14 +6,13 @@ using UnityEngine.AI;
 public class BaseEnemy : MonoBehaviour
 {
     Rigidbody Rb;
-    public AudioSource footstepSource;
-    public AudioClip walkClip;
-
-    public float audioMaxDistance;
-
+    private AudioSource[] AudioSources; 
+    internal AudioSource FootstepSource;
+    internal AudioSource HeatBeatingSource;
     internal Animator Anim;
     internal NavMeshAgent Agent;
     internal PlayerDetector PlayerDetector;
+    
 
     [Header("Enemy Settings")]
     [SerializeField] private float PatrolSpeed = 2.5f;
@@ -28,6 +27,14 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] internal float detectionRadius = 5f; // 检测半径
     [SerializeField] internal float innerDetectionRadius = 3f; // 内部检测半径
     [SerializeField] internal float EnemyHeight = 1.5f; // 敌人高度
+    [SerializeField] internal float audioMaxDistance;  // 音频最大距离
+    [SerializeField] internal float audioMinDistance;  // 音频最小距离
+    [SerializeField] internal float SpatialBlend = 1.0f;  // 空间混合度(1.0f表示3D音频，0.0f表示2D音频)
+    [SerializeField] internal float WalkVolume; // 脚步音效音量
+    [SerializeField] internal float HeatBeatingVolume; // 心跳音效音量
+    [SerializeField] internal AudioClip WalkClip; // 脚步音效
+    [SerializeField] internal AudioClip HeatBeatingClip; // 心跳音效
+
 
 
     [Header("Enemy NavigationPoints")]
@@ -71,14 +78,27 @@ public class BaseEnemy : MonoBehaviour
 
     protected virtual void Awake()
     {
-        footstepSource.spatialBlend = 1.0f; 
-        footstepSource.rolloffMode = AudioRolloffMode.Linear; 
-        footstepSource.maxDistance = audioMaxDistance;
+        
         Rb = GetComponent<Rigidbody>();
         Anim = GetComponent<Animator>();
         Agent = GetComponent<NavMeshAgent>();
         PlayerDetector = GetComponent<PlayerDetector>();
+        AudioSources = GetComponents<AudioSource>();
+        FootstepSource = AudioSources[0]; // 脚步音效
+        HeatBeatingSource = AudioSources[1]; // 心跳音效
         CurrentSpeed = PatrolSpeed;
+        FootstepSource.spatialBlend = SpatialBlend; 
+        FootstepSource.rolloffMode = AudioRolloffMode.Linear; // 设置音频衰减模式为线性
+        FootstepSource.maxDistance = audioMaxDistance;
+        FootstepSource.minDistance = audioMinDistance;
+        FootstepSource.volume = WalkVolume; // 设置音量
+        HeatBeatingSource.spatialBlend = SpatialBlend; 
+        HeatBeatingSource.rolloffMode = AudioRolloffMode.Linear; // 设置音频衰减模式为线性
+        HeatBeatingSource.maxDistance = audioMaxDistance;
+        HeatBeatingSource.minDistance = audioMinDistance;
+        HeatBeatingSource.volume = HeatBeatingVolume; // 设置音量
+
+
     }
 
     private void OnEnable()

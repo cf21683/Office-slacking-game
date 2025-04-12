@@ -6,7 +6,13 @@ public class BossReturnState : BaseState
     private Animator Anim;
     private PlayerDetector PlayerDetector;
     private Vector3 ReturnPoint;
+    private AudioSource FootstepSource;
+    private AudioSource HeatBeatingSource;
+    private AudioClip walkClip;
+    private AudioClip heatBeatingClip;
+
     private bool SetDestinationSny;
+    private bool SetSoundsSny;
 
     public override void EnterState(BaseEnemy Enemy)
     {
@@ -16,22 +22,17 @@ public class BossReturnState : BaseState
         Anim = CurrentEnemy.Anim;
         PlayerDetector = CurrentEnemy.PlayerDetector;
         ReturnPoint = CurrentEnemy.ReturnPointTransform.position;
+        FootstepSource = CurrentEnemy.FootstepSource;
+        HeatBeatingSource = CurrentEnemy.HeatBeatingSource;
+        walkClip = CurrentEnemy.WalkClip;
+        heatBeatingClip = CurrentEnemy.HeatBeatingClip;
+        
 
         Agent.speed = CurrentEnemy.CurrentSpeed;
         Agent.stoppingDistance = CurrentEnemy.StoppingDistance;
 
-        if (!CurrentEnemy.footstepSource.isPlaying)
-        {
-            
-            float maxTime = CurrentEnemy.walkClip.length - 0.3f; 
-            CurrentEnemy.footstepSource.time = Random.Range(0f, maxTime);
-
-            CurrentEnemy.footstepSource.pitch = Random.Range(0.95f, 1.05f);
-            CurrentEnemy.footstepSource.loop = true;
-            CurrentEnemy.footstepSource.Play();
-        }
-
         SetDestinationSny = true; 
+        SetSoundsSny = true; // 设置为 true，表示需要播放脚步声
         Anim.CrossFade("Patrol", 0.1f); // 播放巡逻动画
     }
     
@@ -45,6 +46,7 @@ public class BossReturnState : BaseState
             {
                 CurrentEnemy.IsIdle = true;
                 Anim.CrossFade("Idle", 0.1f); // 播放等待动画
+                SetSoundsSny = false; // 设置为 false，表示不需要播放脚步声
                 CurrentEnemy.TimeCounter(() => ReturnLogicStrategy());
             }
             if(PlayerDetector.CanDetectPlayer())
@@ -53,6 +55,7 @@ public class BossReturnState : BaseState
                 // 如果检测到玩家，切换到追逐状态
                 CurrentEnemy.IsReturning = false;
                 CurrentEnemy.IsChasing = true;
+                SetSoundsSny = false; // 设置为 false，表示不需要播放脚步声
                 CurrentEnemy.SwitchState(BaseEnemyState.Chase);
             }
         }
@@ -66,11 +69,19 @@ public class BossReturnState : BaseState
             Agent.SetDestination(ReturnPoint); // 设置返回点为目标点
             SetDestinationSny = false; // 设置为 false，表示已经设置了目标点
         }
+        SoundsPlay();
     }
     
     public override void ExitState()
     {
-        
+        if (FootstepSource.isPlaying)
+        {
+            FootstepSource.loop = false;
+            FootstepSource.Stop();
+            HeatBeatingSource.loop = false;
+            HeatBeatingSource.Stop();
+        }
+
     }
 
     private void ReturnLogicStrategy()
@@ -78,6 +89,38 @@ public class BossReturnState : BaseState
         CurrentEnemy.IsPatrolling = true;
         CurrentEnemy.IsReturning = false;
         CurrentEnemy.SwitchState(BaseEnemyState.Patrol);
+    }
+
+    private void SoundsPlay()
+    {
+        if (FootstepSource.clip != walkClip)
+            FootstepSource.clip = walkClip;
+        
+        if (HeatBeatingSource.clip != heatBeatingClip)
+            HeatBeatingSource.clip = heatBeatingClip;
+
+        if (!FootstepSource.isPlaying && SetSoundsSny)
+        {
+            float maxTime = walkClip.length - 0.3f; 
+            FootstepSource.time = Random.Range(0f, maxTime);
+            FootstepSource.pitch = Random.Range(0.95f, 1.05f);
+            FootstepSource.loop = true;
+            FootstepSource.Play();
+        }
+        else if (FootstepSource.isPlaying && !SetSoundsSny)
+        {
+            FootstepSource.loop = false;
+            FootstepSource.Stop(); // 停止播放脚步声
+        }
+
+        // if (!HeatBeatingSource.isPlaying)
+        // {
+        //     float maxTime = heatBeatingClip.length - 0.3f; 
+        //     HeatBeatingSource.time = Random.Range(0f, maxTime);
+        //     HeatBeatingSource.pitch = Random.Range(0.95f, 1.05f);
+        //     HeatBeatingSource.loop = true;
+        //     HeatBeatingSource.Play();
+        // }
     }
 
 }

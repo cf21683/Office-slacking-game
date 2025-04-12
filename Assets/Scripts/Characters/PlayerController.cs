@@ -14,8 +14,12 @@ public class PlayerController : MonoBehaviour
     public Cinemachine.CinemachineVirtualCamera computerCam;
     public ChairInteraction currentChair;
 
-    public AudioSource footstepSource;
+    private AudioSource[] AudioSources;
+    internal AudioSource footstepSource;
+    internal AudioSource chaseSource;
     public AudioClip walkClip;
+    public AudioClip chaseClip;
+    public float ChaseVolume;
 
     private bool isNearChair = false;
     private bool isSitting = false;
@@ -44,6 +48,14 @@ public class PlayerController : MonoBehaviour
     void Awake(){
         input = GetComponent<PlayerInputAction>();
         _characterController = GetComponent<CharacterController>();
+        AudioSources = GetComponents<AudioSource>();
+        footstepSource = AudioSources[0]; // 脚步音效
+        footstepSource.clip = walkClip;
+        chaseSource = AudioSources[1]; // 追逐音效
+        chaseSource.clip = chaseClip;
+        chaseSource.volume = ChaseVolume; // 设置音量
+        
+
     }    
     void Start()
     {   
