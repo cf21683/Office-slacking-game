@@ -14,8 +14,8 @@ public class PlayerState_Work: PlayerState
     }
 
     public override void LogicUpdate(){
-        if(input.isInteractPressed && !player.IsBusy){
-            stateMachine.SwitchState(typeof(PlayerState_Idle));
+        if(!player.IsBusy){
+            stateMachine.SwitchState(typeof(PlayerState_Sit));
         }else if(input.isSlackPressed){
             stateMachine.SwitchState(typeof(PlayerState_Slack));
         }
