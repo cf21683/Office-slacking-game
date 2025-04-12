@@ -10,5 +10,11 @@ public class MainMenu : MonoBehaviour
     public void ExitGame(){
         Application.Quit();
     }
-    
+
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
 }
