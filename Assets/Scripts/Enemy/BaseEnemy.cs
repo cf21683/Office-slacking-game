@@ -6,6 +6,11 @@ using UnityEngine.AI;
 public class BaseEnemy : MonoBehaviour
 {
     Rigidbody Rb;
+    public AudioSource footstepSource;
+    public AudioClip walkClip;
+
+    public float audioMaxDistance;
+
     internal Animator Anim;
     internal NavMeshAgent Agent;
     internal PlayerDetector PlayerDetector;
@@ -66,6 +71,9 @@ public class BaseEnemy : MonoBehaviour
 
     protected virtual void Awake()
     {
+        footstepSource.spatialBlend = 1.0f; 
+        footstepSource.rolloffMode = AudioRolloffMode.Linear; 
+        footstepSource.maxDistance = audioMaxDistance;
         Rb = GetComponent<Rigidbody>();
         Anim = GetComponent<Animator>();
         Agent = GetComponent<NavMeshAgent>();

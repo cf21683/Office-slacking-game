@@ -20,8 +20,19 @@ public class BossReturnState : BaseState
         Agent.speed = CurrentEnemy.CurrentSpeed;
         Agent.stoppingDistance = CurrentEnemy.StoppingDistance;
 
+        if (!CurrentEnemy.footstepSource.isPlaying)
+        {
+            
+            float maxTime = CurrentEnemy.walkClip.length - 0.3f; 
+            CurrentEnemy.footstepSource.time = Random.Range(0f, maxTime);
+
+            CurrentEnemy.footstepSource.pitch = Random.Range(0.95f, 1.05f);
+            CurrentEnemy.footstepSource.loop = true;
+            CurrentEnemy.footstepSource.Play();
+        }
+
         SetDestinationSny = true; 
-        Anim.SetBool("IsPatrol", true); // 设置返回动画
+        Anim.CrossFade("Patrol", 0.1f); // 播放巡逻动画
     }
     
     public override void LogicUpdateState()
@@ -33,8 +44,7 @@ public class BossReturnState : BaseState
             if (Agent.remainingDistance <= Agent.stoppingDistance)
             {
                 CurrentEnemy.IsIdle = true;
-                Anim.SetBool("IsPatrol", false); // 设置返回动画为 false
-                Anim.SetBool("IsIdle", true); // 设置等待动画为 true
+                Anim.CrossFade("Idle", 0.1f); // 播放等待动画
                 CurrentEnemy.TimeCounter(() => ReturnLogicStrategy());
             }
             if(PlayerDetector.CanDetectPlayer())
@@ -43,8 +53,6 @@ public class BossReturnState : BaseState
                 // 如果检测到玩家，切换到追逐状态
                 CurrentEnemy.IsReturning = false;
                 CurrentEnemy.IsChasing = true;
-                Anim.SetBool("IsPatrol", false); // 设置巡逻动画为 false
-                Anim.SetBool("IsIdle", false); // 设置等待动画为 false
                 CurrentEnemy.SwitchState(BaseEnemyState.Chase);
             }
         }
@@ -54,7 +62,7 @@ public class BossReturnState : BaseState
     {
         if (SetDestinationSny)
         {
-            Anim.SetBool("IsPatrol", true); // 设置返回动画为 true
+            Anim.CrossFade("Patrol", 0.1f); // 播放巡逻动画
             Agent.SetDestination(ReturnPoint); // 设置返回点为目标点
             SetDestinationSny = false; // 设置为 false，表示已经设置了目标点
         }
@@ -69,7 +77,6 @@ public class BossReturnState : BaseState
     {
         CurrentEnemy.IsPatrolling = true;
         CurrentEnemy.IsReturning = false;
-        Anim.SetBool("IsIdle", false); // 设置等待动画为 false
         CurrentEnemy.SwitchState(BaseEnemyState.Patrol);
     }
 

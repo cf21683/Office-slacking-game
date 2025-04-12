@@ -15,7 +15,6 @@ public class BossAdmonishState : BaseState
 
     public override void EnterState(BaseEnemy Enemy)
     {
-        
         AdmonishCamera = GameObject.FindGameObjectWithTag("AdmonishCamera").GetComponent<Camera>(); // 获取跳杀摄像机
         AdmonishAudioListener = GameObject.FindGameObjectWithTag("AdmonishCamera").GetComponent<AudioListener>(); // 获取跳杀摄像机的音频监听器
         CurrentEnemy = Enemy; // 获取当前敌人
@@ -24,8 +23,7 @@ public class BossAdmonishState : BaseState
         AdmonishTime = CurrentEnemy.AdmonishTime; // 获取跳杀时间
         PlayerDetector = CurrentEnemy.PlayerDetector; // 获取玩家检测器
 
-        Anim.SetBool("IsChase", false); // 设置追逐动画为 false
-        Anim.SetBool("IsIdle", true); // 设置等待动画为 true
+        Anim.CrossFade("Idle", 0.1f); // 播放Idle动画
     }
 
     public override void LogicUpdateState()
@@ -40,7 +38,6 @@ public class BossAdmonishState : BaseState
     {
         if(IsAdmonishCamera)
         {
-           
             AdmonishCamera.enabled = true; // 启用跳杀摄像机
             AdmonishAudioListener.enabled = true; // 启用跳杀摄像机的音频监听器
             AdmonishTimer += Time.deltaTime;
@@ -58,7 +55,6 @@ public class BossAdmonishState : BaseState
                 PlayerDetector.IsPlayerAdmonished = true; // 设置玩家检测器为警告后状态
                 // Debug.Log($"跳杀结束，恢复主摄像机，探测隔绝状态:{PlayerDetector.IsPlayerAdmonished}"); // 输出跳杀结束的调试信息
                 Agent.isStopped = false; // 允许导航代理移动
-                Anim.SetBool("IsPatrol", true);
                 // Debug.Log("跳杀结束"); // 输出跳杀结束的调试信息
                 CurrentEnemy.SwitchState(BaseEnemyState.Return); // 切换回巡逻状态
             }

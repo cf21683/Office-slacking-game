@@ -22,6 +22,19 @@ public class BossPatrolState : BaseState
         PatrolRadius = CurrentEnemy.PatrolRadius;
         MinPatrolDistance = CurrentEnemy.MinPatrolDistance;
         PlayerTransform = CurrentEnemy.PlayerTransform;
+        
+        if (CurrentEnemy.footstepSource.clip != CurrentEnemy.walkClip)
+            CurrentEnemy.footstepSource.clip = CurrentEnemy.walkClip;
+
+        if (!CurrentEnemy.footstepSource.isPlaying )
+        {
+            float maxTime = CurrentEnemy.walkClip.length - 0.3f; 
+            CurrentEnemy.footstepSource.time = Random.Range(0f, maxTime);
+
+            CurrentEnemy.footstepSource.pitch = Random.Range(0.95f, 1.05f);
+            CurrentEnemy.footstepSource.loop = true;
+            CurrentEnemy.footstepSource.Play();
+        }
 
         // 设置巡逻参数
         Agent.speed = CurrentEnemy.CurrentSpeed;
@@ -30,7 +43,7 @@ public class BossPatrolState : BaseState
         // 初始化巡逻状态
         PatrolCount = 0;
         SetDestinationSny = true;
-        Anim.SetBool("IsPatrol", true); // 设置巡逻动画
+        Anim.CrossFade("Patrol", 0.1f); // 播放巡逻动画
     }
 
     public override void LogicUpdateState()
@@ -41,8 +54,7 @@ public class BossPatrolState : BaseState
             if (Agent.remainingDistance <= Agent.stoppingDistance)
             {
                 CurrentEnemy.IsIdle = true; // 标记为正在等待
-                Anim.SetBool("IsPatrol", false); // 设置巡逻动画为 false
-                Anim.SetBool("IsIdle", true); // 设置等待动画为 true
+                Anim.CrossFade("Idle", 0.1f); // 播放等待动画
                 CurrentEnemy.TimeCounter(() => PatrolLogicStrategy());
             }
 
@@ -52,8 +64,6 @@ public class BossPatrolState : BaseState
                 // 如果检测到玩家，切换到追逐状态
                 CurrentEnemy.IsPatrolling = false;
                 CurrentEnemy.IsChasing = true;
-                Anim.SetBool("IsPatrol", false); // 设置巡逻动画为 false
-                Anim.SetBool("IsIdle", false); // 设置等待动画为 false
                 CurrentEnemy.SwitchState(BaseEnemyState.Chase);
             }
         }
@@ -84,7 +94,7 @@ public class BossPatrolState : BaseState
         if (NavMesh.SamplePosition(randomDirection, out hit, PatrolRadius, NavMesh.AllAreas))
         {
             Destination = hit.position;
-            Anim.SetBool("IsPatrol", true); // 设置巡逻动画为 true
+            Anim.CrossFade("Patrol", 0.1f); // 播放巡逻动画
             Agent.SetDestination(Destination);
             SetDestinationSny = false; // 设置为 false，表示已经设置了目标点
         }
@@ -100,13 +110,11 @@ public class BossPatrolState : BaseState
             {
                 CurrentEnemy.IsPatrolling = false;
                 CurrentEnemy.IsReturning = true;
-                Anim.SetBool("IsIdle", false); // 设置等待动画为 false
                 CurrentEnemy.SwitchState(BaseEnemyState.Return);
 
             }
             else
             {
-                Anim.SetBool("IsIdle", false); // 设置等待动画为 false
                 // 继续设置下一个巡逻目标
                 SetDestinationSny = true; // 设置为 true，表示需要设置新的目标点
             }

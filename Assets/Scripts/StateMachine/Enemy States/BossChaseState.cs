@@ -19,7 +19,17 @@ public class BossChaseState : BaseState
         Agent.stoppingDistance = CurrentEnemy.StoppingDistance;
         Destination = PlayerTransform.position; // 获取玩家的位置
         SetDestinationSny = true; 
-        Anim.SetBool("IsChase", true);
+
+        if (!CurrentEnemy.footstepSource.isPlaying)
+        {
+            float maxTime = CurrentEnemy.walkClip.length - 0.3f; 
+            CurrentEnemy.footstepSource.time = Random.Range(0f, maxTime);
+
+            CurrentEnemy.footstepSource.pitch = Random.Range(1.2f, 1.4f);
+            CurrentEnemy.footstepSource.loop = true;
+            CurrentEnemy.footstepSource.Play();
+        }
+        Anim.CrossFade("Chase", 0.3f); // 播放 Chase 动画
     }
 
     
@@ -33,7 +43,6 @@ public class BossChaseState : BaseState
                 CurrentEnemy.IsChasing = false;
                 CurrentEnemy.IsAdmonishing = true; // 标记为正在警告
                 Agent.isStopped = true; // 停止移动
-                Anim.SetBool("IsChase", false); // 设置追逐动画为 false
                 CurrentEnemy.SwitchState(BaseEnemyState.Admonish); // 切换到警告状态
             }
             if (PlayerDetector.CanDetectPlayer() && Agent.remainingDistance > Agent.stoppingDistance)
@@ -47,8 +56,6 @@ public class BossChaseState : BaseState
                 // 如果未检测到玩家，切换到回归状态
                 CurrentEnemy.IsPatrolling = true;
                 CurrentEnemy.IsChasing = false;
-                Anim.SetBool("IsPatrol", true); // 设置巡逻动画为 false
-                Anim.SetBool("IsChase", false); // 设置追逐动画为 true
                 CurrentEnemy.SwitchState(BaseEnemyState.Return); // 切换到回归状态
             }
         }
@@ -66,6 +73,6 @@ public class BossChaseState : BaseState
     
     public override void ExitState()
     {
-        
+        CurrentEnemy.footstepSource.Stop();
     }
 }

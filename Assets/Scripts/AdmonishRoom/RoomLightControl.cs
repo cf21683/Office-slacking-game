@@ -16,9 +16,11 @@ public class RoomLightControl : MonoBehaviour
 
     private Color originalAmbientColor;
     private bool originalLightState;
-
     private CameraStateNotifier _cameraNotifier;
-
+    
+    // 音效相关
+    public AudioClip darknessSound; // MP3 格式的音效
+    private AudioSource audioSource; // 用于播放音效的 AudioSource
 
     void Start()
     {
@@ -26,6 +28,10 @@ public class RoomLightControl : MonoBehaviour
         targetCamera = GetComponentInChildren<Camera>();
         RegisterCameraEvents();
         BackupOriginalState();
+
+        // 初始化 AudioSource
+        audioSource = targetCamera.gameObject.AddComponent<AudioSource>();
+        audioSource.playOnAwake = false; // 禁止自动播放
         
     }
 
@@ -79,6 +85,13 @@ public class RoomLightControl : MonoBehaviour
 
     void ApplyDarkness()
     {
+        // 播放音效
+        if (darknessSound != null && audioSource != null && !audioSource.isPlaying)
+        {
+            audioSource.clip = darknessSound;
+            audioSource.Play();
+        }
+
         // Debug.Log("Applying darkness to the room.");
         RenderSettings.skybox = null;
         if (disableAmbientLight) 
@@ -94,7 +107,7 @@ public class RoomLightControl : MonoBehaviour
         RenderSettings.defaultReflectionMode = DefaultReflectionMode.Skybox;
         RenderSettings.customReflection = null;
 
-        DynamicGI.UpdateEnvironment();
+        DynamicGI.UpdateEnvironment();        
     }
 
     void RestoreLighting()
