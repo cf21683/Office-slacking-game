@@ -11,7 +11,7 @@ public class PlayerState_Sit : PlayerState
         player.transform.position = position;
 
         player.transform.rotation = Quaternion.Euler(0, 90, 0);
-
+        player.UnlockCursor();
         
         animator.Play("Sit");
         
