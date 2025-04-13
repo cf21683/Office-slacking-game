@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     private float remainingTime;
 
     [Header("分数追踪")]
+
+    public TotalScoreManager totalScoreManager;
     public int workScore = 0;
     public int slackScore = 0;
     public bool hiddenEndingUnlocked = false;
@@ -29,6 +31,8 @@ public class GameManager : MonoBehaviour
 
         remainingTime -= Time.deltaTime;
 
+        workScore = totalScoreManager.WorkScore;
+        slackScore = totalScoreManager.SlackScore;
         if (remainingTime <= 0f)
         {
             TriggerEnding();
