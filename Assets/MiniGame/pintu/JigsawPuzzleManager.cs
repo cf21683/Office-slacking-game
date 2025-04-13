@@ -135,7 +135,7 @@ public class JigsawPuzzleManager : MonoBehaviour
         if (!isCompleted)
         {
             isCompleted = true;
-            score += 500;
+            score += 100;
             UpdateScoreDisplay();
 
 

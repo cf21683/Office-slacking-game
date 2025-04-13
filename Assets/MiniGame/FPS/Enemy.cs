@@ -5,7 +5,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Image), typeof(CanvasGroup))]
 public class Enemy : MonoBehaviour, IPointerDownHandler
 {
-    public int scoreValue = 10;
+    public int scoreValue = 20;
     private GameManager1 gameManager;
 
     void Start()

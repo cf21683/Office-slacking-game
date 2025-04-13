@@ -369,7 +369,7 @@ MonoBehaviour:
   workScore: 0
   slackScore: 0
   penaltyScore: 100
-  needWorkScore: 10
+  needWorkScore: 500
 --- !u!4 &148157664
 Transform:
   m_ObjectHideFlags: 0

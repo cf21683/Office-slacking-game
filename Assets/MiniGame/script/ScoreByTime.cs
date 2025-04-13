@@ -28,7 +28,7 @@ public class ScoreByTime : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(3f); // 等待 10 秒
-            currentScore += 10; // 增加 10 分
+            currentScore += 30; // 增加 10 分
             UpdateScoreDisplay(); // 更新显示
 
             // 累加到全局存储的总分 B
