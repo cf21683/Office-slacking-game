@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: ff4afea53ddab974299c75896fea1b0e, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -5279,6 +5279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 446ca592cc8414545b5fc10887f0ce64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _characterController: {fileID: 0}
   freeLookCam: {fileID: 1918131616}
   computerCam: {fileID: 1096868205}
   currentChair: {fileID: 7840404664969968589}
