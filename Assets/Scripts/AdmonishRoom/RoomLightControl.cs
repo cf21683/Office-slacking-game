@@ -30,7 +30,7 @@ public class RoomLightControl : MonoBehaviour
         BackupOriginalState();
 
         // 初始化 AudioSource
-        audioSource = targetCamera.gameObject.AddComponent<AudioSource>();
+        audioSource = targetCamera.GetComponent<AudioSource>();
         audioSource.playOnAwake = false; // 禁止自动播放
         
     }

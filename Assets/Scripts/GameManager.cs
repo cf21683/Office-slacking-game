@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
 
         if (isCompleted1Logger.IsComplete)
         {
-            Debug.Log("触发隐藏结局");
+            // Debug.Log("触发隐藏结局");
             SceneManager.LoadSceneAsync(4);
         }
         if (remainingTime <= 0f)
@@ -46,13 +46,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void DecreaseSlackScore(){
-        slackScore -= penaltyScore;
-        Debug.Log("minus Score");
-        Debug.Log(slackScore);
-        slackScore = Mathf.Max(0, slackScore);
-    }
-
+    
 
     void TriggerEnding()
     {
@@ -62,12 +56,12 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadSceneAsync(5);
         }else if(workScore > slackScore)
         {
-            Debug.Log("触发工作结局");
+            // Debug.Log("触发工作结局");
             SceneManager.LoadSceneAsync(2);
         }
         else
         {
-            Debug.Log("触发摸鱼结局");
+            // Debug.Log("触发摸鱼结局");
             SceneManager.LoadSceneAsync(3);
         }
     }

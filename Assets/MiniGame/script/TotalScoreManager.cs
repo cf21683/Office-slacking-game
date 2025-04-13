@@ -5,6 +5,8 @@ using System;
 public class TotalScoreManager : MonoBehaviour
 {
     public static TotalScoreManager Instance;
+    [Header("GameManager")]
+    public GameManager gameManager;
 
     [Header("UI References")]
     // 确保三个UI组件都存在声明
@@ -13,7 +15,8 @@ public class TotalScoreManager : MonoBehaviour
 
     private int slackScore;
     private int workScore;
-    public int panlty;
+    private int totalPenaltyScore = 0;
+    public int penaltyScore; // 每次惩罚的分数
 
     public int SlackScore{get{return slackScore;}}
     public int WorkScore{get{return workScore;}}
@@ -37,6 +40,7 @@ public class TotalScoreManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        penaltyScore = gameManager.penaltyScore; // 从GameManager获取惩罚分数
     }
 
     void Update()
@@ -52,10 +56,18 @@ public class TotalScoreManager : MonoBehaviour
                    + PlayerPrefs.GetInt(GameKeys.PUZZLE_A, 0);
         workScore = scoreA;
         scoreB = PlayerPrefs.GetInt(GameKeys.SHOOTER_B, 0);
-        slackScore = scoreB;
+        slackScore = scoreB - totalPenaltyScore;
+        // Debug.Log($"Calculation{slackScore }");
+        if (slackScore < 0)
+        {
+        slackScore = 0;
+        totalPenaltyScore = 0;
+        PlayerPrefs.SetInt(GameKeys.SHOOTER_B, 0); // 重置 SHOOTER_B 的值为 0
+        PlayerPrefs.Save(); // 保存修改
+        }
         
         scoreAText.text = $"WorkScore: {scoreA}";
-        scoreBText.text = $"SlackScore: {scoreB}";
+        scoreBText.text = $"SlackScore: {slackScore}";
     }
 
     // 重置分数
@@ -68,10 +80,8 @@ public class TotalScoreManager : MonoBehaviour
         UpdateAllScores();
     }
     public void DecreaseSlackScore(){
-        scoreB -= panlty;
-
-        scoreB = Mathf.Max(0,scoreB);
-        Debug.Log(scoreB);
+        totalPenaltyScore += penaltyScore;
+        // Debug.Log($"TotalScoreManager:{totalPenaltyScore}");
     }
 }
 

@@ -63,7 +63,6 @@ public class BossAdmonishState : BaseState
     
     public override void ExitState()
     {
-        CurrentEnemy.gameManager.DecreaseSlackScore();
         CurrentEnemy.totalScoreManager.DecreaseSlackScore();
     }
 }

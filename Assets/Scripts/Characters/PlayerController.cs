@@ -73,6 +73,10 @@ public class PlayerController : MonoBehaviour
             _cameraMovement = ConvertToCameraSpace(_walk);
             _characterController.Move(_cameraMovement * Time.deltaTime);
          }
+
+         if(isSitting){
+            ChairSit();
+         }
         
     }
 
@@ -150,5 +154,14 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+    }
+
+    public void ChairSit(){
+        Transform sitPoint = currentChair.sitPoint;
+        Vector3 pos = sitPoint.position;
+        pos.y = -0.68f; 
+
+        transform.position = pos;
+        transform.rotation = Quaternion.Euler(0, 90, 0);
     }
 }

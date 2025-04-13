@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 [CreateAssetMenu(menuName = "Data/StateMachine/PlayerState/Sit",fileName = "PlayerState_Sit")]
 public class PlayerState_Sit : PlayerState
@@ -6,11 +7,6 @@ public class PlayerState_Sit : PlayerState
     public override void Enter(){
         player.computerCam.Priority = 20;
         player.IsSitting = true;
-        Vector3 position = player.currentChair.sitPoint.position;
-        position.y = -0.029f;
-        player.transform.position = position;
-
-        player.transform.rotation = Quaternion.Euler(0, 90, 0);
         player.UnlockCursor();
         
         animator.Play("Sit");
