@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     Vector3 _walk;
     Vector3 _cameraMovement;
 
-    CharacterController _characterController;
+    public CharacterController _characterController;
 
     public Cinemachine.CinemachineFreeLook freeLookCam;
     public Cinemachine.CinemachineVirtualCamera computerCam;
@@ -74,9 +74,7 @@ public class PlayerController : MonoBehaviour
             _characterController.Move(_cameraMovement * Time.deltaTime);
          }
 
-         if(isSitting){
-            ChairSit();
-         }
+        
         
     }
 
@@ -156,12 +154,5 @@ public class PlayerController : MonoBehaviour
         Cursor.visible = true;
     }
 
-    public void ChairSit(){
-        Transform sitPoint = currentChair.sitPoint;
-        Vector3 pos = sitPoint.position;
-        pos.y = -0.68f; 
 
-        transform.position = pos;
-        transform.rotation = Quaternion.Euler(0, 90, 0);
-    }
 }

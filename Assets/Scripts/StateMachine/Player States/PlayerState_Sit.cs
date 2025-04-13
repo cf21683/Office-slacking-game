@@ -7,6 +7,18 @@ public class PlayerState_Sit : PlayerState
     public override void Enter(){
         player.computerCam.Priority = 20;
         player.IsSitting = true;
+
+        player._characterController.enabled = false;
+
+   
+        Transform sitPoint = player.currentChair.sitPoint;
+        Vector3 pos = sitPoint.position;
+        pos.y = -0.68f; 
+
+        player.transform.position = pos;
+        player.transform.rotation = Quaternion.Euler(0, 90, 0);
+
+    player._characterController.enabled = true;
         player.UnlockCursor();
         
         animator.Play("Sit");
