@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     {
         HandleChairInteraction();
         HandleGravity();
-         if (!isSitting){
+         if (!isSitting && !isBusy){
             CharacterRotation();
             _cameraMovement = ConvertToCameraSpace(_walk);
             _characterController.Move(_cameraMovement * Time.deltaTime);

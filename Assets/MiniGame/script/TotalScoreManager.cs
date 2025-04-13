@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class TotalScoreManager : MonoBehaviour
 {
@@ -12,9 +13,14 @@ public class TotalScoreManager : MonoBehaviour
 
     private int slackScore;
     private int workScore;
+    public int panlty;
 
     public int SlackScore{get{return slackScore;}}
     public int WorkScore{get{return workScore;}}
+
+    private int scoreA;
+
+    private int scoreB;
 
 
     void Awake()
@@ -33,7 +39,7 @@ public class TotalScoreManager : MonoBehaviour
         }
     }
 
-    void Start()
+    void Update()
     {
         UpdateAllScores();
     }
@@ -42,10 +48,10 @@ public class TotalScoreManager : MonoBehaviour
     public void UpdateAllScores()
     {
         // 直接读取全局累计值
-        int scoreA = PlayerPrefs.GetInt(GameKeys.TYPING_A, 0) 
+        scoreA = PlayerPrefs.GetInt(GameKeys.TYPING_A, 0) 
                    + PlayerPrefs.GetInt(GameKeys.PUZZLE_A, 0);
         workScore = scoreA;
-        int scoreB = PlayerPrefs.GetInt(GameKeys.SHOOTER_B, 0);
+        scoreB = PlayerPrefs.GetInt(GameKeys.SHOOTER_B, 0);
         slackScore = scoreB;
         
         scoreAText.text = $"WorkScore: {scoreA}";
@@ -60,6 +66,12 @@ public class TotalScoreManager : MonoBehaviour
         PlayerPrefs.SetInt(GameKeys.SHOOTER_B, 0);
         PlayerPrefs.Save(); // 确保修改保存到PlayerPrefs
         UpdateAllScores();
+    }
+    public void DecreaseSlackScore(){
+        scoreB -= panlty;
+
+        scoreB = Mathf.Max(0,scoreB);
+        Debug.Log(scoreB);
     }
 }
 

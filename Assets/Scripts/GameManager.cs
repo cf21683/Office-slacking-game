@@ -11,9 +11,10 @@ public class GameManager : MonoBehaviour
     [Header("分数追踪")]
 
     public TotalScoreManager totalScoreManager;
+    public IsCompleted1Logger isCompleted1Logger;
     public int workScore = 0;
     public int slackScore = 0;
-    public bool hiddenEndingUnlocked = false;
+    public int penaltyScore = 100;
 
     public int needWorkScore = 300;
 
@@ -33,27 +34,31 @@ public class GameManager : MonoBehaviour
 
         workScore = totalScoreManager.WorkScore;
         slackScore = totalScoreManager.SlackScore;
+
+        if (isCompleted1Logger.IsComplete)
+        {
+            Debug.Log("触发隐藏结局");
+            SceneManager.LoadSceneAsync(4);
+        }
         if (remainingTime <= 0f)
         {
             TriggerEnding();
         }
     }
 
-    public void UnlockHiddenEnding()
-    {
-        hiddenEndingUnlocked = true;
+    public void DecreaseSlackScore(){
+        slackScore -= penaltyScore;
+        Debug.Log("minus Score");
+        Debug.Log(slackScore);
+        slackScore = Mathf.Max(0, slackScore);
     }
+
 
     void TriggerEnding()
     {
         endingTriggered = true;
 
-        if (hiddenEndingUnlocked)
-        {
-            Debug.Log("触发隐藏结局");
-            SceneManager.LoadSceneAsync(4);
-        }
-        else if (needWorkScore > workScore){
+         if (needWorkScore > workScore){
             SceneManager.LoadSceneAsync(5);
         }else if(workScore > slackScore)
         {

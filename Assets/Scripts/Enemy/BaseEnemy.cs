@@ -12,6 +12,9 @@ public class BaseEnemy : MonoBehaviour
     internal Animator Anim;
     internal NavMeshAgent Agent;
     internal PlayerDetector PlayerDetector;
+
+    public GameManager gameManager;
+    public TotalScoreManager totalScoreManager;
     
 
     [Header("Enemy Settings")]

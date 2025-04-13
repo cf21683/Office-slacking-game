@@ -18,7 +18,7 @@ public class PlayerState_Sit : PlayerState
     }
 
     public override void LogicUpdate(){
-        if(input.isInteractPressed){
+        if(input.isInteractPressed && !player.IsBusy){
             stateMachine.SwitchState(typeof(PlayerState_Idle));
         }else if(input.isWorkPressed){
             stateMachine.SwitchState(typeof(PlayerState_Work));

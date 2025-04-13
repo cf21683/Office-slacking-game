@@ -3,7 +3,10 @@ using UnityEngine;
 public class IsCompleted1Logger : MonoBehaviour
 {
     public string prefabName; // 预制体实例的名称
+    private bool isComplete = false;
     private JigsawPuzzleManager1 yourScript;
+
+    public bool IsComplete{get{return isComplete;}}
 
     void Start()
     {
@@ -51,12 +54,8 @@ public class IsCompleted1Logger : MonoBehaviour
             // 等待一段时间后再次检测
             yield return new WaitForSeconds(0.1f);
         }
-        Debug.Log("isCompleted1 的值为 true");
+        if(yourScript.isCompleted1){
+            isComplete = true;
+        }
     }
-}
-
-// 包含isCompleted1变量的脚本
-public class YourScript : MonoBehaviour
-{
-    public bool isCompleted1;
 }

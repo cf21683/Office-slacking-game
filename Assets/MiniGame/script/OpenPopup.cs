@@ -23,8 +23,15 @@ public class OpenPopup : MonoBehaviour
             return; // 如果存在，不创建新的预制体
         }
 
+        // 获取当前所属的 Canvas
+        Canvas targetCanvas = GetComponentInParent<Canvas>();
+        if (targetCanvas == null)
+        {
+            Debug.LogError("没有找到所属的 Canvas！");
+            return;
+        }
+
         // 创建新实例
-        Canvas targetCanvas = FindObjectOfType<Canvas>();
         currentPopup = Instantiate(popupPrefab, targetCanvas.transform);
 
         // 设置位置并确保标签正确
@@ -34,4 +41,4 @@ public class OpenPopup : MonoBehaviour
 
         openCount++; // 打开次数加1
     }
-}    
+}
