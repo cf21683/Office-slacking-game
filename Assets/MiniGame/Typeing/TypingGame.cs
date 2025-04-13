@@ -9,7 +9,7 @@ public class TypingGame : MonoBehaviour
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private float timeLimit = 60f;
 
-    private string[] wordPool = { "apple", "banana", "computer", "unity", "developer" };
+    private string[] wordPool = { "set goals", "make a schedule", "prioritize tasks", "carry out a project", "implement a plan","meet deadlines","work overtime","put in extra hours","work as a team","hold a team meeting","share ideas","improve professional skills","send an email","deal with stress","take a break","manage workload","change jobs" };
     private string currentWord;
     private int score;
     private float timer;

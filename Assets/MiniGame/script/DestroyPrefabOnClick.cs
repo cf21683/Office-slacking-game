@@ -12,6 +12,6 @@ public class DestroyPrefabOnClick : MonoBehaviour
             Destroy(prefab);
         }
         
-        Debug.Log($"已销毁 {prefabs.Length} 个预制体实例。");
+        // Debug.Log($"已销毁 {prefabs.Length} 个预制体实例。");
     }
 }
